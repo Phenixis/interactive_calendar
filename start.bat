@@ -1,0 +1,1 @@
+"C:\Program Files\php\php-win.exe" generator.php > test.html
