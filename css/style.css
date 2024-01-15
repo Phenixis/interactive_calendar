@@ -1,0 +1,609 @@
+* {
+  font-family: monospace;
+}
+
+body {
+  background: #101318;
+  text-shadow: 0 0 0.4vw currentColor;
+  overflow: hidden;
+}
+
+.wrapper {
+  position: relative;
+  overflow: hidden;
+  padding: 2%;
+  width: 96%;
+}
+.wrapper > input {
+  -webkit-appearance: none;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.periodic-table {
+  display: grid;
+  grid-gap: 5px;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: repeat(31, 1fr);
+}
+
+.element {
+  position: relative;
+  font-size: 0.5vw;
+  padding-bottom: 18%;
+  cursor: pointer;
+  color: #fff;
+  transition: 500ms;
+}
+
+.element .overlay {
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: #101318;
+  opacity: 0;
+  pointer-events: none;
+  transition: 500ms;
+}
+
+.element .square {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid;
+  border-radius: 3px;
+  box-sizing: border-box;
+  background: #101318;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  transition-property: transform, z-index, left, right, top, bottom;
+  transition-duration: 100ms, 0ms, 200ms, 200ms, 200ms, 200ms;
+  transition-delay: 0ms, 100ms, 0ms, 0ms, 0ms, 0ms;
+}
+
+.element .square .flex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.flex {
+  height: 100%;
+  border-radius: 0 3px 3px 0;
+}
+
+.element .atomic-number {
+  font-size: 0.8vw;
+}
+.element .label {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  transition: 200ms;
+
+  /* border: 1px solid pink; */
+}
+.element .symbol {
+  font-size: 0.8vw;
+  
+}
+.element .name, .element .nb_events {
+  font-size: 0.8vw;
+}
+.element .name {
+  /* border: 2px solid pink; */
+  display: none;
+}
+.element .name * {
+  margin: 0;
+  padding: 0;
+}
+.element .name li{
+  list-style-type: disc;
+  list-style-position: inside;
+}
+.element .name li .event {
+  color: currentColor;
+  text-shadow: 0 0 0.4vw currentColor;
+  background-color: #101318;
+  border: none;
+  width: 85%;
+  resize:none;
+  scroll-snap-align: center;
+  /* border: 1px solid pink; */
+  word-wrap: break-word;
+  word-break: break-all;
+}
+.element .name .new_event {
+  scroll-snap-align: center;
+  width: 90%;
+}
+.element .model {
+  display: none;
+  position: absolute;
+  left: -500%;
+  right: -500%;
+  top: -500%;
+  bottom: -500%;
+  transform: scale(0.1);
+}
+.element .model .orbital {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border: 5px solid;
+  border-radius: 50%;
+  opacity: 0.25;
+}
+
+.element input[type="radio"] {
+  -webkit-appearance: none;
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  outline: none;
+}
+.element input[type="radio"].activate:hover ~ .square {
+  z-index: 2;
+  transform: scale(1.35);
+  transition-delay: 0ms;
+  outline: none;
+  pointer-events: none;
+}
+.element input[type="radio"].activate:checked + input[type="radio"].deactivate {
+  z-index: 3;
+  pointer-events: all;
+}
+.element input[type="radio"].activate:checked ~ .overlay {
+  opacity: 0.75;
+}
+.element input[type="radio"].activate:checked ~ .square {
+  z-index: 3;
+
+  height: fit-content;
+  align-items: center;
+  justify-content: start;
+
+  transform: scale(3);
+  transition-duration: 500ms, 0ms, 200ms, 200ms, 200ms, 200ms;
+  transition-delay: 0ms;
+  outline: none;
+  cursor: auto;
+}
+.element input[type="radio"].activate:checked ~ .square .label {
+  transition-duration: 500ms;
+  transform: scale(0.75);
+}
+.element input[type="radio"].activate:checked ~ .square .atomic-weight {
+  opacity: 1;
+  transition: 500ms;
+}
+.element input[type="radio"].activate:checked ~ .square .model {
+  display: block;
+  animation: fade-in;
+  animation-duration: 1s;
+}
+.element input[type="radio"].activate:checked ~ .square .orbital {
+  animation-name: rotate;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+.element input[type="radio"].activate:checked ~ .square .nb_events {
+  display: none;
+}
+.element input[type="radio"].activate:checked ~ .square .name {
+  display: block;
+  height: 1.2vw;
+  font-size: 0.4vw;
+  overflow:hidden scroll;
+  scrollbar-color: #101318;
+  scroll-snap-type: y mandatory;
+  overflow-wrap: break-word;
+}
+.element.before input[type="radio"].activate:checked ~ .square .name .new_event, .element.before input[type="radio"].activate:checked ~ .square .name .submit {
+  display: none;
+}
+.element input[type="radio"].deactivate {
+  position: fixed;
+  display: block;
+  z-index: 1;
+  opacity: 0;
+  pointer-events: none;
+}
+.element input[type="radio"].deactivate:checked ~ .square {
+  z-index: 1;
+}
+.element input[type="radio"].deactivate:checked ~ .square .nb_events {
+  display: block;
+}
+.element input[type="radio"].deactivate:checked ~ .square .name {
+  display: none;
+  font-size: 0.5vw;
+}
+
+.winter {
+  color: #4cddf3;
+}
+
+.winter .weekend {
+  background-color: #4cddf3;
+}
+
+.spring {
+  color: #bef836;
+}
+
+.spring .weekend {
+  background-color: #bef836;
+}
+
+.summer {
+  color: #f3e355;
+}
+
+.summer .weekend {
+  background-color: #f3e355;
+}
+
+.autumn {
+  color: #b67c5a;
+}
+
+.autumn .weekend {
+  background-color: #b67c5a;
+}
+
+.before {
+  color: gray;
+}
+
+.before .weekend {
+  background-color : gray;
+}
+
+.weekend {
+  color: #101318;
+}
+
+
+.r1  { 
+  grid-row: 1; 
+}
+
+.r2  { 
+  grid-row: 2; 
+}
+
+.r3  { 
+  grid-row: 3; 
+}
+
+.r4  { 
+  grid-row: 4; 
+}
+
+.r5  { 
+  grid-row: 5; 
+}
+
+.r6  { 
+  grid-row: 6; 
+}
+
+.r7  { 
+  grid-row: 7; 
+}
+
+.r8  {
+  grid-row: 8;
+}
+
+.r9  {
+  grid-row: 9;
+}
+
+.r10  {
+  grid-row: 10;
+}
+
+.r11  {
+  grid-row: 11;
+}
+
+.r12  {
+  grid-row: 12;
+}
+
+.r13  {
+  grid-row: 13;
+}
+
+.r14  {
+  grid-row: 14;
+}
+
+.r15  {
+  grid-row: 15;
+}
+
+.r16  {
+  grid-row: 16;
+}
+
+.r17  {
+  grid-row: 17;
+}
+
+.r18  {
+  grid-row: 18;
+}
+
+.r19  {
+  grid-row: 19;
+}
+
+.r20  {
+  grid-row: 20;
+}
+
+.r21  {
+  grid-row: 21;
+}
+
+.r22  {
+  grid-row: 22;
+}
+
+.r23  {
+  grid-row: 23;
+}
+
+.r24  {
+  grid-row: 24;
+}
+
+.r25  {
+  grid-row: 25;
+}
+
+.r26  {
+  grid-row: 26;
+}
+
+.r27  {
+  grid-row: 27;
+}
+
+.r28  {
+  grid-row: 28;
+}
+
+.r29  {
+  grid-row: 29;
+}
+
+.r30  {
+  grid-row: 30;
+}
+
+.r31  {
+  grid-row: 31;
+}
+
+.c1 {
+  grid-column: 1;
+}
+
+.c2 {
+  grid-column: 2;
+}
+
+.c3 {
+  grid-column: 3;
+}
+
+.c4 {
+  grid-column: 4;
+}
+
+.c5 {
+  grid-column: 5;
+}
+
+.c6 {
+  grid-column: 6;
+}
+
+.c7 {
+  grid-column: 7;
+}
+
+.c8 {
+  grid-column: 8;
+}
+
+.c9 {
+  grid-column: 9;
+}
+
+.c10 {
+  grid-column: 10;
+}
+
+.c11 {
+  grid-column: 11;
+}
+
+.c12 {
+  grid-column: 12;
+}
+
+.r1 input[type="radio"].activate:checked ~ .square {
+  top: 100%;
+}
+
+.r31 input[type="radio"].activate:checked ~ .square {
+  top: -100%;
+}
+
+.c1 input[type="radio"].activate:checked ~ .square {
+  left: 100%;
+}
+
+.c12 input[type="radio"].activate:checked ~ .square {
+  left: -100%;
+}
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes noise {
+  0%, 100% {
+    background-position: 0 0;
+  }
+  10% {
+    background-position: -5% -10%;
+  }
+  20% {
+    background-position: -15% 5%;
+  }
+  30% {
+    background-position: 7% -25%;
+  }
+  40% {
+    background-position: 20% 25%;
+  }
+  50% {
+    background-position: -25% 10%;
+  }
+  60% {
+    background-position: 15% 5%;
+  }
+  70% {
+    background-position: 0% 15%;
+  }
+  80% {
+    background-position: 25% 35%;
+  }
+  90% {
+    background-position: -10% 10%;
+  }
+}
+.key {
+  position: relative;
+  z-index: 1;
+  grid-row: 1;
+  grid-column-start: 3;
+  grid-column-end: 17;
+  font-size: 0.8vw;
+  line-height: 1.5;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  user-select: none;
+}
+.key .row {
+  position: relative;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+.key .row label {
+  opacity: 0.85;
+  cursor: pointer;
+  transition: 120ms;
+  pointer-events: all;
+}
+.key .row label:hover {
+  opacity: 1 !important;
+}
+
+#alkali-metals:checked ~ .periodic-table .element:not(.alkali-metal),
+#alkaline-earth-metals:checked ~ .periodic-table .element:not(.alkaline-earth-metal),
+#lanthanoids:checked ~ .periodic-table .element:not(.lanthanoid),
+#actinoids:checked ~ .periodic-table .element:not(.actinoid),
+#transition-metals:checked ~ .periodic-table .element:not(.transition-metal),
+#post-transition-metals:checked ~ .periodic-table .element:not(.post-transition-metal),
+#metalloids:checked ~ .periodic-table .element:not(.metalloid),
+#other-nonmetals:checked ~ .periodic-table .element:not(.other-nonmetal),
+#noble-gasses:checked ~ .periodic-table .element:not(.noble-gas),
+#unknown:checked ~ .periodic-table .element:not(.unknown),
+#alkali-metals:checked ~ .periodic-table .placeholder,
+#alkaline-earth-metals:checked ~ .periodic-table .placeholder,
+#lanthanoids:checked ~ .periodic-table .placeholder:not(.lanthanoid),
+#actinoids:checked ~ .periodic-table .placeholder:not(.actinoid),
+#transition-metals:checked ~ .periodic-table .placeholder,
+#post-transition-metals:checked ~ .periodic-table .placeholder,
+#metalloids:checked ~ .periodic-table .placeholder,
+#other-nonmetals:checked ~ .periodic-table .placeholder,
+#noble-gasses:checked ~ .periodic-table .placeholder,
+#unknown:checked ~ .periodic-table .placeholder {
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+#alkali-metals:checked ~ .periodic-table .key label:not(.alkali-metal),
+#alkaline-earth-metals:checked ~ .periodic-table .key label:not(.alkaline-earth-metal),
+#lanthanoids:checked ~ .periodic-table .key label:not(.lanthanoid),
+#actinoids:checked ~ .periodic-table .key label:not(.actinoid),
+#transition-metals:checked ~ .periodic-table .key label:not(.transition-metal),
+#post-transition-metals:checked ~ .periodic-table .key label:not(.post-transition-metal),
+#metalloids:checked ~ .periodic-table .key label:not(.metalloid),
+#other-nonmetals:checked ~ .periodic-table .key label:not(.other-nonmetal),
+#noble-gasses:checked ~ .periodic-table .key label:not(.noble-gas),
+#unknown:checked ~ .periodic-table .key label:not(.unknown) {
+  opacity: 0.65;
+}
+
+.category-toggle:not(#lanthanoids):not(#actinoids):checked ~ .periodic-table .gap {
+  opacity: 0.5;
+}
+
+.category-toggle:checked ~ .category-cancel {
+  visibility: visible;
+  pointer-events: all;
+  cursor: pointer;
+}
+
+
+
+/* A enlever un jour
+input#new_event {
+  display : none;
+} */

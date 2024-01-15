@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Calendar</title>
+  <link rel="stylesheet" href="css/normalize.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="wrapper">
+  <div class="periodic-table">
+    
+    *insert*
+    
+  </div>
+  <script src="JS/script.js"></script>
+</div>
+<!-- partial -->
+
+</body>
+</html>
