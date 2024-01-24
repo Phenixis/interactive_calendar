@@ -16,6 +16,7 @@ body {
 }
 .wrapper > input {
   -webkit-appearance: none;
+  appearance: none;
   position: fixed;
   left: 0;
   top: 0;
@@ -124,6 +125,7 @@ body {
   background-color: #101318;
   border: none;
   width: 85%;
+  height: fit-content;
   resize:none;
   scroll-snap-align: center;
   /* border: 1px solid pink; */
@@ -156,6 +158,7 @@ body {
 
 .element input[type="radio"] {
   -webkit-appearance: none;
+  appearance: none;
   position: absolute;
   z-index: 2;
   left: 0;
@@ -244,35 +247,35 @@ body {
   font-size: 0.5vw;
 }
 
-.winter {
+.Hiver {
   color: #4cddf3;
 }
 
-.winter .weekend {
+.Hiver .weekend {
   background-color: #4cddf3;
 }
 
-.spring {
+.Printemps {
   color: #bef836;
 }
 
-.spring .weekend {
+.Printemps .weekend {
   background-color: #bef836;
 }
 
-.summer {
+.Été {
   color: #f3e355;
 }
 
-.summer .weekend {
+.Été .weekend {
   background-color: #f3e355;
 }
 
-.autumn {
+.Automne {
   color: #b67c5a;
 }
 
-.autumn .weekend {
+.Automne .weekend {
   background-color: #b67c5a;
 }
 
