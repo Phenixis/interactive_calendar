@@ -149,7 +149,6 @@ for line in template.readlines():
             day = Day(actual_month, month_day, (i-1)%7, True)
             result += f"<div class=\"element {day.season} c{day.month+1} r{day.month_day}\">\n\t<input class=\"activate\" type=\"radio\" name=\"elements\"/>\n\t<input class=\"deactivate\" type=\"radio\" name=\"elements\"/>\n\t<div class=\"overlay\"></div>\n\t<div class=\"square\">\n\t\t<div class=\"flex{day.weekend}\">\n\t\t\t<div class=\"atomic-number\">{format(day.month_day, "#02d")}</div>\n\t\t\t<div class=\"symbol\">{weekdays_short[(i-1)%7]}&nbsp;</div>\n\t\t</div>\n\t\t<div class=\"nb_events\">{day.nb_events()}</div>\n\t\t<div class=\"name\">{day.get_events()}<input type=\"text\" class=\"new_event\" name=\"new_event\"></div>\n\t</div>\n</div>\n\n"
 
-fichier_resultat = open("index.html", "w+")
-fichier_resultat.write(result)
+open("index.html", "w+").write(result)
 
 open("datas.json", "w+").write(Day.to_json())
