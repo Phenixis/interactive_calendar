@@ -52,13 +52,13 @@
           $specificSeason=$actualSeason;
         }
 
-        if (date('w', mktime(0, 0, 0, $mois+1, $jour+1, date("Y"))) > 5 || date('w', mktime(0, 0, 0, $mois+1, $jour+1, date("Y"))) == 0) {
+        if (date('w', mktime(0, 0, 0, $mois+1, $jour, date("Y"))) > 5 || date('w', mktime(0, 0, 0, $mois+1, $jour, date("Y"))) == 0) {
           $weekend=" weekend";
         } else {
           $weekend="";
         }
 
-        echo "<div class=\"element $specificSeason c". $mois+1 . " r$jour \">\n\t<input class=\"activate\" type=\"radio\" name=\"elements\"/>\n\t<input class=\"deactivate\" type=\"radio\" name=\"elements\"/>\n\t<div class=\"overlay\"></div>\n\t<div class=\"square\">\n\t\t<div class=\"flex$weekend\">\n\t\t\t<div class=\"atomic-number\">" . sprintf("%0d", $jour) . "</div>\n\t\t\t<div class=\"symbol\">" . date('D', mktime(0, 0, 0, $mois+1, $jour+1, date("Y"))) . "&nbsp;</div>\n\t\t</div>\n\t\t<div class=\"nb_events\">" . count($datas[$mois."/".$jour]) . " events</div>\n\t\t<div class=\"name\">";
+        echo "<div class=\"element $specificSeason c". $mois+1 . " r$jour \">\n\t<input class=\"activate\" type=\"radio\" name=\"elements\"/>\n\t<input class=\"deactivate\" type=\"radio\" name=\"elements\"/>\n\t<div class=\"overlay\"></div>\n\t<div class=\"square\">\n\t\t<div class=\"flex$weekend\">\n\t\t\t<div class=\"atomic-number\">" . sprintf("%0d", $jour) . "</div>\n\t\t\t<div class=\"symbol\">" . date('D', mktime(0, 0, 0, $mois+1, $jour, date("Y"))) . "&nbsp;</div>\n\t\t</div>\n\t\t<div class=\"nb_events\">" . count($datas[$mois."/".$jour]) . " events</div>\n\t\t<div class=\"name\">";
         foreach($datas[$mois."/".$jour] as $event) {
           echo "<li><textarea class=\"event\" cols=\"18\" rows=\"" . ceil((strlen($event)+1)/15) . "\">$event</textarea></li>";
         }
