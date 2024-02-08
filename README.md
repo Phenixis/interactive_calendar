@@ -2,6 +2,8 @@
 
 An interactive calendar created to be used with [the Lively Wallpaper app](https://github.com/rocksdanister/lively).
 
+[screenshot](screenshot.png)
+
 ## Installation
 1. Download the last release and unzip the folder
 2. Go to the Lively Wallpaper app
@@ -11,8 +13,9 @@ An interactive calendar created to be used with [the Lively Wallpaper app](https
 
 There you have it, the wallpaper is set. There are some other things you can do to improve you experience with the calendar. They are all listed in the [Advanced Settings](#Advance_Settings) section
 
-## Known issues and improvements
+## Known issues and possible improvements
 - [ ] Light mode
 - [ ] Python script saving the changes made in the calendar dynamicaly
 
 ## Advance Settings
+Documentation in progres...
