@@ -2,7 +2,7 @@
 
 An interactive calendar created to be used with [the Lively Wallpaper app](https://github.com/rocksdanister/lively).
 
-[screenshot](screenshot.png)
+![screenshot](screenshot.png)
 
 ## Installation
 1. Download the last release and unzip the folder
